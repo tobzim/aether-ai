@@ -52,3 +52,25 @@
     border-radius: 3px;
     transition: background 0.2s;
 }
+
+.aether-ai-block {
+    margin: 1em 0;
+}
+.aether-ai-block .components-spinner {
+    margin-top: .5em;
+}
+.aether-ai-block .components-button {
+    margin-top: .5em;
+}
+
+/* TinyMCE‑Button „Aether AI Optimize“ */
+.mce-toolbar .mce-btn[aria-label="Aether AI Optimize"] img {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+/* Inserter‑Icon für deinen Block */
+.block-editor-block-types-list__item-icon img {
+    width: 20px !important;
+    height: 20px !important;
+}

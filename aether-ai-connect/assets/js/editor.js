@@ -1,6 +1,8 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+    
+
     /** CLASSIC EDITOR INTEGRATION **/
     if (typeof tinymce !== 'undefined' && tinymce.PluginManager) {
         tinymce.PluginManager.add('ki_plugin', function (editor) {
@@ -19,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             editor.addButton('ki_button', {
                 type: 'menubutton',
-                text: 'KI ✨',
+                text: 'Aether AI Optimize',
                 icon: false,
                 menu: menuItems
             });

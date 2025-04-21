@@ -262,4 +262,28 @@ class KI_Settings {
                 return ['default-model'];
         }
     }
+    
+    /**
+ * Liefert alle benutzerdefinierten Prompts als Array mit id, name und prompt.
+ *
+ * @return array [
+ *   ['id' => '0', 'name' => 'Mein Prompt', 'prompt' => 'Text {{text}}'],
+ *   …
+ * ]
+ */
+public function get_all_prompts() {
+    $custom = get_option( 'ki_custom_prompts', [] );
+    $prompts = [];
+
+    foreach ( $custom as $index => $item ) {
+        $prompts[] = [
+            'id'     => (string) $index,
+            'name'   => $item['name'],
+            'prompt' => $item['prompt'],
+        ];
+    }
+
+    return $prompts;
+}
+
 }

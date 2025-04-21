@@ -46,21 +46,31 @@ class KI_Admin {
         
     }
 
-    
-
     /**
      * Menü und Unterseiten registrieren
      */
     public function register_menu() {
         add_menu_page(
-            esc_html__('Aether AI Connect', 'aether-ai-connect'),
-            esc_html__('Aether AI Connect', 'aether-ai-connect'),
+            esc_html__( 'Aether AI Connect', 'aether-ai-connect' ),
+            esc_html__( 'Aether AI Connect', 'aether-ai-connect' ),
             'manage_options',
             'aether-dashboard',
-            [$this, 'render_dashboard_page'],
-            'dashicons-cloud', // Icon
+            [ $this, 'render_dashboard_page' ],
+            plugins_url( '/assets/icons/aether.svg', __FILE__ ), // eigenes SVG
             60
         );
+        
+        add_action( 'admin_head', 'aether_ai_admin_icon_size' );
+function aether_ai_admin_icon_size() {
+    echo '<style>
+        /* Top-Level‑Menü „Aether AI Connect“ */
+        #adminmenu .toplevel_page_aether-dashboard .wp-menu-image img {
+            width: 16px;
+            height: 16px;
+        }
+    </style>';
+}
+
 
         add_submenu_page(
             'aether-dashboard',

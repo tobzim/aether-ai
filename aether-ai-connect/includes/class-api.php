@@ -2,6 +2,33 @@
 
 class KI_API {
 
+
+    public function optimize_text( $text, $prompt_id = '' ) {
+        // 1) Prompt-Text bestimmen
+        if ( $prompt_id ) {
+            $settings = new KI_Settings();
+            $all      = $settings->get_all_prompts();
+            $found    = array_filter( $all, fn( $p ) => $p['id'] === $prompt_id );
+            if ( ! $found ) {
+                throw new Exception( "Unbekannte Prompt-ID: {$prompt_id}" );
+            }
+            $promptData = array_shift( $found );
+            $promptText = $promptData['prompt'];
+        } else {
+            // Default-Prompt aus Option holen (Fallback: reiner Text)
+            $promptText = get_option( 'ki_api_default_prompt', '{{text}}' );
+        }
+    
+        // 2) Internen Call ausführen
+        $result = $this->call( $text, $promptText );
+    
+        if ( '' === trim( $result ) ) {
+            throw new Exception( 'Keine Antwort von der KI erhalten.' );
+        }
+    
+        return $result;
+    }
+    
     public function call($text, $promptText) {
         $cache_key = 'ki_cache_' . md5($text . $promptText);
         $cached = get_transient($cache_key);
