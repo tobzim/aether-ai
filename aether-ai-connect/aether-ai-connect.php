@@ -103,6 +103,11 @@ if ( class_exists( 'KI_WooGenerator' ) ) {
     KI_WooGenerator::register_routes();
 }
 
+if ( class_exists( 'KI_BlogGenerator' ) ) {
+    KI_BlogGenerator::register_routes();
+}
+
+
 
 function aether_ai_rest_optimize( WP_REST_Request $request ) {
     try {

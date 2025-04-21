@@ -1,14 +1,9 @@
-
 document.addEventListener('DOMContentLoaded', function () {
-
-    
 
     /** CLASSIC EDITOR INTEGRATION **/
     if (typeof tinymce !== 'undefined' && tinymce.PluginManager) {
         tinymce.PluginManager.add('ki_plugin', function (editor) {
-
             const prompts = ki_vars.custom_prompts || [];
-
             const menuItems = prompts.length
                 ? prompts.map(item => ({
                     text: item.name,
@@ -38,8 +33,15 @@ function openKiModalClassic(editor, promptText) {
         return;
     }
 
-    openKiRequest(selectedText, promptText, (optimizedText) => {
-        editor.selection.setContent(optimizedText);
+    openKiRequest(selectedText, promptText, (optimizedHtml) => {
+        // Füge sauberes HTML in den Editor ein
+        if (window.tinymce && tinymce.activeEditor) {
+            tinymce.activeEditor.execCommand('mceInsertContent', false, optimizedHtml);
+        } else {
+            // Fallback: Textarea-Modus
+            const textarea = document.getElementById('content');
+            textarea.value += optimizedHtml;
+        }
     });
 }
 
@@ -56,8 +58,8 @@ function openKiRequest(text, prompt, callback) {
     }
 
     modal.classList.add('open');
-    resultBox.value = 'Lade KI-Ergebnis...';
-    if (spinner) spinner.style.visibility = 'visible';
+    resultBox.style.display = 'none';
+    spinner.style.display = 'block';
 
     fetch(ki_vars.ajaxurl, {
         method: 'POST',
@@ -71,25 +73,41 @@ function openKiRequest(text, prompt, callback) {
     })
     .then(response => response.json())
     .then(result => {
+        spinner.style.display = 'none';
         if (!result.success) {
             resultBox.value = 'Fehler: ' + (result.data || 'Unbekannter Fehler');
+            resultBox.style.display = 'block';
             return;
         }
 
-        resultBox.value = result.data.optimized || 'Keine Antwort erhalten';
+        // Hole das optimierte HTML
+        let html = result.data.optimized || result.data.optimized_text || '';
+        // 1) ```html```-Fences entfernen
+        html = html.replace(/```html[\s\S]*?```/gi, '');
+        // 2) Nur erlaubte Tags lassen (h1-h3,p,ul,ol,li,strong,em)
+        html = html.replace(/<(\/?)(?!\/?(?:h1|h2|h3|p|ul|ol|li|strong|em)\b)[^>]*>/gi, '');
+
+        resultBox.value = html;
+        resultBox.style.display = 'block';
+        insertBtn.style.display = 'inline-block';
+
         insertBtn.onclick = () => {
-            callback(result.data.optimized);
+            callback(html);
+            resultBox.style.display = 'none';
+            insertBtn.style.display = 'none';
             modal.classList.remove('open');
         };
     })
     .catch(() => {
+        spinner.style.display = 'none';
         resultBox.value = '❌ Fehler bei der KI-Anfrage.';
-    })
-    .finally(() => {
-        if (spinner) spinner.style.visibility = 'hidden';
+        resultBox.style.display = 'block';
     });
 
     cancelBtn.onclick = () => {
+        spinner.style.display = 'none';
+        resultBox.style.display = 'none';
+        insertBtn.style.display = 'none';
         modal.classList.remove('open');
     };
 }
