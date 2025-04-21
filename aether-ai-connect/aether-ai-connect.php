@@ -98,6 +98,12 @@ function aether_ai_register_rest_routes() {
 }
 add_action( 'rest_api_init', 'aether_ai_register_rest_routes' );
 
+// WooGenerator REST-Routen registrieren
+if ( class_exists( 'KI_WooGenerator' ) ) {
+    KI_WooGenerator::register_routes();
+}
+
+
 function aether_ai_rest_optimize( WP_REST_Request $request ) {
     try {
         $text = $request->get_param( 'text' );

@@ -66,6 +66,29 @@
             </p>
         </div>
 
+          <!-- Hier die neue Karte für WooGenerator Bulk -->
+          <div class="aether-card">
+            <h2>🛒 WooGenerator Bulk‑Generator</h2>
+            <p>
+                Mit dem neuen <strong>WooGenerator Bulk‑Generator</strong> kannst du mehrere WooCommerce‑Produkte auf einmal optimieren:
+            </p>
+            <ul>
+                <li>🔹 Wähle in einer übersichtlichen Tabelle deine Produkte aus</li>
+                <li>🔹 Erhalte automatisch ausführliche HTML‑Beschreibungen und prägnante Kurztexte</li>
+                <li>🔹 Führe eine Volltext‑Suche durch und paginiere durch tausende Produkte</li>
+                <li>🔹 Alles per AJAX, ohne die Seite neu zu laden</li>
+            </ul>
+            <p>
+                <?php
+                /* Link zur WooGenerator‑Seite */
+                $woo_url = admin_url( 'admin.php?page=woogenerator' );
+                ?>
+                <a href="<?php echo esc_url( $woo_url ); ?>" class="button-primary">
+                    <?php esc_html_e( 'Zur WooGenerator Bulk‑Seite', 'aether-ai-connect' ); ?>
+                </a>
+            </p>
+        </div>
+
         <div class="aether-card">
             <h2>Support & Hilfe</h2>
             <p>Bei Fragen, Problemen oder Feature-Wünschen erreichst du uns hier:</p>
