@@ -1,0 +1,244 @@
+/* ---------------------------------------------------
+   WP AI Connect – Dark Theme & Modern Modal 
+   --------------------------------------------------- */
+
+/* Variablen */
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --color-bg: #0d0d0d;
+  --color-surface: #1c1c1c;
+  --color-surface-light: #2b2b40;
+  --color-text: #e0e0e0;
+  --color-text-muted: #888888;
+  --color-accent: #00ffd5;
+  --color-accent-hover: #00e0c0;
+  --color-border: #2a2a2a;
+  --radius: 8px;
+  --spacing: 16px;
+  --modal-z: 100000;
+}
+
+/* Admin-Grundlayout */
+body.toplevel_page_wp-ai-connect,
+#wpwrap, #wpcontent, #wpbody, #wpbody-content {
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+/* Dropdowns & Buttons */
+.ki-dropdown,
+.ki-dropdown-panel {
+  position: absolute;
+  background: var(--color-surface-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+  z-index: var(--modal-z);
+  display: none;
+}
+.ki-dropdown.open,
+.ki-dropdown-panel.open { display: block; }
+
+.ki-dropdown-item {
+  width: 100%;
+  padding: 6px 12px;
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  font-size: .85rem;
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: background .2s;
+}
+.ki-dropdown-item:hover {
+  background: var(--color-surface);
+}
+
+.ki-button {
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
+  color: var(--color-bg);
+  padding: 6px 14px;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s;
+}
+.ki-button:hover {
+  background: linear-gradient(90deg, var(--color-accent-hover), var(--color-accent));
+}
+
+/* ---------------------------------------------------
+   Modernes KI-Modal
+   --------------------------------------------------- */
+
+/* Overlay mit Blur */
+.ki-modal {
+  display: none;
+  position: fixed;
+  inset: 0; /* top/right/bottom/left */
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  z-index: var(--modal-z);
+}
+.ki-modal.open {
+  display: flex;
+}
+
+/* Box mit Elevation + Smooth Transition */
+.ki-modal-content {
+  background: var(--color-surface-light);
+  border-radius: calc(var(--radius) * 1.5);
+  width: 100%;
+  max-width: 640px;
+  padding: calc(var(--spacing) * 2);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform .4s ease, opacity .4s ease;
+}
+.ki-modal.open .ki-modal-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Close-Button */
+.ki-modal-close {
+  position: absolute;
+  top: calc(var(--spacing)/2);
+  right: calc(var(--spacing)/2);
+  width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 50%;
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.ki-modal-close:hover {
+  background: rgba(255,255,255,0.2);
+  color: var(--color-accent);
+}
+
+/* Header & Einstellungen */
+.ki-modal-header {
+  margin-bottom: var(--spacing);
+}
+.ki-modal-header h2 {
+  margin: 0;
+  font-size: 1.75rem;
+  color: var(--color-accent);
+}
+.ki-model-info {
+  margin-top: calc(var(--spacing)/2);
+  font-size: .95rem;
+  color: var(--color-text-muted);
+}
+
+/* Loader */
+.ki-loading {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--color-text-muted);
+}
+.ki-loading .spinner {
+  margin-bottom: var(--spacing);
+}
+
+/* Ergebnis-Textarea */
+#ki-result {
+  display: none;
+  width: 100%;
+  min-height: 240px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--spacing);
+  color: var(--color-text);
+  font-size: 1rem;
+  line-height: 1.5;
+  resize: vertical;
+  margin-bottom: var(--spacing);
+  box-sizing: border-box;
+  transition: border-color .2s, box-shadow .2s;
+}
+#ki-result:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(0,255,213,0.2);
+  outline: none;
+}
+
+/* Footer-Actions */
+.ki-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing);
+}
+.ki-modal-actions .button-primary {
+  padding: 12px 24px;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-radius: var(--radius);
+  font-weight: 600;
+  transition: background .2s;
+}
+.ki-modal-actions .button-primary:hover {
+  background: var(--color-accent-hover);
+}
+.ki-modal-actions .button-secondary {
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  transition: background .2s, color .2s;
+}
+.ki-modal-actions .button-secondary:hover {
+  background: var(--color-surface);
+  color: var(--color-accent);
+}
+
+/* Fallback‐Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* HTML-Output statt Textarea */
+.ki-html-output {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--spacing);
+  max-height: 300px;
+  overflow-y: auto;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  display: none;        /* wird per JS angezeigt */
+  box-sizing: border-box;
+}
+
+/* Nur im Modal: alle h1–h6 weiß */
+.ki-modal .ki-html-output h1,
+.ki-modal .ki-html-output h2,
+.ki-modal .ki-html-output h3,
+.ki-modal .ki-html-output h4,
+.ki-modal .ki-html-output h5,
+.ki-modal .ki-html-output h6 {
+  color: #ffffff;
+}
