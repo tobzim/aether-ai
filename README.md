@@ -1,2 +1,2 @@
-# aether-ai
-Wordpress Plugin Aether AI Connect
+# wp-ai-connect
+Wordpress Plugin WP AI Connect
